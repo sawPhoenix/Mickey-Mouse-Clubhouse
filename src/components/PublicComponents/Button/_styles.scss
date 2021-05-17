@@ -39,7 +39,14 @@
 }
 
 .btn-default {
-  @include button-style($white, $gray-400, $body-color, $white, $primary, $primary)
+  @include button-style($white, $white, $body-color, $white, $body-color, $body-color)
+}
+.btn-neon {
+  color: #4cc9f0;
+  &:hover {
+    background-color: #4cc9f0;
+    box-shadow: 10px 10px 99px 6px #4cc9f0;
+  }
 }
 
 .btn-link {

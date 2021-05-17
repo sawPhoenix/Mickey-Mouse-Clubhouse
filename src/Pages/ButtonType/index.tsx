@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-const Button = () => {
+const ButtonType: React.FC = () => {
   return (
     <div>
       {/* <!-- 霓虹效果 --> */}
@@ -44,4 +44,4 @@ const Button = () => {
   )
 }
 
-export default Button
+export default ButtonType
