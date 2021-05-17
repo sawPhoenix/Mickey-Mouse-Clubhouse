@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 // import App from './App';
 // import ButtonPage from './Pages/ButtonType';
-import WolCome from "./Pages/Welcome";
+import App from "./App";
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <ButtonPage /> */}
-    <WolCome />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

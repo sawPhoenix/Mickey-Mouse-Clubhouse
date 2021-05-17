@@ -1,14 +1,15 @@
-import React from 'react'
-import img1 from '../../assets/background/1.jpg'
-import "./index.css"
-import {makeCanvasFullScreen} from "../../utils/sakura"
-const WolCome:React.FC = () => {
-  let s
+import React, { useState } from 'react'
+import classnames from "classnames"
+const WolCome: React.FC = () => {
+  const [background, setBackground] = useState(Math.floor(Math.random()*30)+ 1);
+
+  const className_bg = classnames("welcome_container", {
+    [`bg${background}`]: true
+  })
   return (
-    <div className="welcome_container" style={{backgroundImage: `url(${img1})`}} >
-      <canvas id="sakura" />
+    <div className={className_bg}  >
+
     </div>
   )
 }
 export default WolCome
-// react

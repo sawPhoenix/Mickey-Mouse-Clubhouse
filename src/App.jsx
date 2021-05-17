@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import "./styles/index.scss";
+import routers from './routers';
+function RouterConfig() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-         Welcome to my world
-        </p>
-        {/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        {routers.map(router => <Route path={router.path} component={router.component} ></Route>)}
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+export default RouterConfig;

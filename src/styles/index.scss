@@ -10,25 +10,5 @@
 // animation
 @import "./animation";
 
-// button
-@import "../components/Botton/styles";
 
-// Menu
-@import "../components/Menu/styles";
-
-// icon
-@import "../components/Icon/styles"; 
-
-// input
-
-@import '../components/Input/styles';
-
-// autocomplete
-@import '../components/autoComplete/styles';
-
-// upload
-@import "../components/UpLoad/styles";
-
-// progress
-
-@import "../components/Progress/styles";
+@import "../pages/Welcome/index.scss"
