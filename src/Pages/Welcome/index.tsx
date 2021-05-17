@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import classnames from "classnames"
+import React, { useState } from 'react';
+import Button from '../../components/PublicComponents/Button'
+import classnames from "classnames";
 const WolCome: React.FC = () => {
   const [background, setBackground] = useState(Math.floor(Math.random()*30)+ 1);
 
@@ -8,7 +9,7 @@ const WolCome: React.FC = () => {
   })
   return (
     <div className={className_bg}  >
-
+      <Button>test</Button>
     </div>
   )
 }
