@@ -1,23 +1,24 @@
-import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react'
+import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes, useState, useEffect } from 'react'
 import classNames from 'classnames'
 
 export type ButtonSize = 'lg' | 'sm'
-export type ButtonType ='primary' | 'default' | 'danger' | 'link' | 'neon'
+export type ButtonType = 'primary' | 'default' | 'danger' | 'link' | 'neon'
 
 interface BaseButtonProps {
   className?: string;
-   /**设置 Button 的禁用 */
+  /**设置 Button 的禁用 */
   disabled?: boolean;
   /**设置 Button 的尺寸 */
   size?: ButtonSize;
   /**设置 Button 的类型 */
   btnType?: ButtonType;
   children: React.ReactNode;
-  href?: string
+  href?: string;
+  neonColor?: string;
 }
 
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>
-type AnchorButtonProps =  BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
+type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 /**
@@ -36,9 +37,10 @@ export const Button: FC<ButtonProps> = (props) => {
     size,
     children,
     href,
+    neonColor,
     ...restProps
   } = props;
-
+  const [neonCol, setNeonColor] = useState({})
   // btn, btn-lg, btn-primary
   const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
@@ -46,13 +48,30 @@ export const Button: FC<ButtonProps> = (props) => {
     [`btn-${size}`]: size,
     'disabled': (btnType === 'link') && disabled
   })
+  // const changeColor = useRef(true)
+  useEffect(() => {
+    if (btnType === "neon") {
+      setNeonColor({ color: neonColor || "#4cc9f0" })
+    }
+  },[])
+  const toggleEnter = () => {
+    if (btnType === "neon") {
+      setNeonColor({ backgroundColor: neonColor || "#4cc9f0", boxShadow: `10px 10px 99px 6px ${neonColor}`})
+    }
+  }
+  const togglLeave = () => {
+    if (btnType === "neon") {
+      setNeonColor({color: neonColor || "#4cc9f0"})
+    }
+    console.log(neonCol);
+  }
 
   if (btnType === "link" && href) {
     return (
       <a
-      className={classes} 
-      href={href}
-      {...restProps}
+        className={classes}
+        href={href}
+        {...restProps}
       >
         {children}
       </a>
@@ -62,9 +81,12 @@ export const Button: FC<ButtonProps> = (props) => {
       <button
         className={classes}
         disabled={disabled}
+        style={neonCol}
+        onMouseEnter={toggleEnter}
+        onMouseLeave={togglLeave}
         {...restProps}
       >
-       {children}
+        {children}
       </button>
     )
   }

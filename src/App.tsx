@@ -10,7 +10,7 @@ function RouterConfig() {
   return (
     <Router>
       <Switch>
-        {routers.map(router => <Route exact path={router.path} component={router.component} ></Route>)}
+        {routers.map((router,index) => <Route　key={index} exact path={router.path} component={router.component} ></Route>)}
       </Switch>
     </Router>
   );

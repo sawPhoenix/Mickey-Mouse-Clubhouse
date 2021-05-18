@@ -9,7 +9,7 @@ const WolCome: React.FC = () => {
   })
   return (
     <div className={className_bg}  >
-      <Button btnType="neon">test</Button>
+      <Button btnType="neon" neonColor="red">test</Button>
     </div>
   )
 }
