@@ -10,7 +10,7 @@ const WolCome: React.FC = () => {
   return (
     <div className={className_bg}  >
       <div className="welcome_changebg_btn">
-        <Button btnType="neon" onClick={() => setBackground(background + 1)}>切换背景</Button>
+        <Button btnType="neon" onClick={() => setBackground(background === 31 ?  1: background + 1 )}>切换背景</Button>
       </div>
     </div>
   )
