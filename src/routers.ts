@@ -11,4 +11,5 @@ const routers = [
     component: ButtonType
   }
 ]
+
 export default routers

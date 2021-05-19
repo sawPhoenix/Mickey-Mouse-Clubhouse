@@ -6,12 +6,18 @@ import {
 } from "react-router-dom";
 import "./styles/index.scss";
 import routers from './routers';
+import Layout from "./components/Layouts"
 function RouterConfig() {
   return (
     <Router>
-      <Switch>
-        {routers.map((router,index) => <Route　key={index} exact path={router.path} component={router.component} ></Route>)}
-      </Switch>
+      <Layout>
+        <Switch>
+          {routers.map((router, index) =>
+            <Route key={index} exact path={router.path} component={router.component} ></Route>
+          )}
+        </Switch>
+      </Layout>
+
     </Router>
   );
 }
