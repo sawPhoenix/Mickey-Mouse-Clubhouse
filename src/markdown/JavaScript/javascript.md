@@ -278,3 +278,56 @@
     ```
     赋值表达式 p.foo = o.foo 的返回值是目标函数的引用，因此调用位置是 foo() 而不是 p.foo() 或者 o.foo()。根据我们之前说过的，这里会应用默认绑定。注意：对于默认绑定来说，决定 this 绑定对象的并不是调用位置是否处于严格模式，而是 函数体是否处于严格模式。如果函数体处于严格模式，this 会被绑定到 undefined，否则 this 会被绑定到全局对象。
   3. 软绑定
+    用软绑定来加大绑定的灵活性，使得绑定函数视情况而选择硬绑定还是显示绑定，又或是隐性绑定
+
+  ```
+  if (!Function.prototype.softBind) {
+    Function.prototype.softBind = function (obj) {
+      var fn = this; // 捕获所有 curried 参数
+      var curried = [].slice.call(arguments, 1);
+      var bound = function () {
+        return fn.apply((!this || this === (window || global)) 
+        ? obj 
+        : this.curried.concat.apply(curried, arguments));
+      }; bound.prototype = Object.create(fn.prototype);
+      return bound;
+    };
+  }
+  ```
+
+  使用方法：
+  ```
+  function foo() { console.log("name: " + this.name); }
+  var obj = { name: "obj" }, obj2 = { name: "obj2" }, obj3 = { name: "obj3" };
+  var fooOBJ = foo.softBind(obj); fooOBJ(); // name: obj 
+  obj2.foo = foo.softBind(obj); obj2.foo(); // name: obj2 <---- 看！！！ 
+  fooOBJ.call(obj3); // name: obj3 <---- 看！ 
+  setTimeout(obj2.foo, 10); // name: obj <---- 应用了软绑定
+  ```
+
+  ## 箭头函数
+  箭头函数不使用 this 的四种标准规则，而是根据外层（函数或者全局）作用域来决 定 this。
+  箭头函数的绑定调用过一次后，会自动绑定到被调用的作用域中，且无法变更，如果第二次绑定到其他作用域上，this也会指向第一次绑定的函数上。
+
+
+
+  # 类型
+  
+  ## 对象
+
+  ### 访问类型
+  1. obj.xxx ：属性访问
+  2. obj['xxx']：键访问
+    
+  两者区别： 键访问可以接受任意 UTF-8/Unicode 字符串作为属性名。而且由于键访问使用字符串来访问属性，所以可以在程序中构造这个字符串
+  
+  例：
+  ```
+  var myObject = { a:2 };
+  var idx;
+  if (wantA) { idx = "a"; }
+  // 之后 
+  console.log( myObject[idx] ); // 2
+  ```
+这种方式可以用来做可计算属性名，classnames插件用的就是这种方式
+  

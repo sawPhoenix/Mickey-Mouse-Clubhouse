@@ -3,7 +3,9 @@ import Button from '../../components/PublicComponents/Button'
 import classnames from "classnames";
 const WolCome: React.FC = () => {
   return (
-    <div>teststese</div>
+    <div>
+      <div className="test_model"></div>
+    </div>
   )
 }
 export default WolCome
