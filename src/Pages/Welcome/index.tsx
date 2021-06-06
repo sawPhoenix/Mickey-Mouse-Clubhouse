@@ -4,7 +4,9 @@ import classnames from "classnames";
 const WolCome: React.FC = () => {
   return (
     <div>
-      <div className="test_model"></div>
+      <div className="test_model">
+        <Button></Button>
+      </div>
     </div>
   )
 }
