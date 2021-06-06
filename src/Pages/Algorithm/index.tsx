@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@components/PublicComponents/Button';
+import Button from '../../components/PublicComponents/Button';
 import { Queue, Stack, LinkedList } from "./pubic"; //  数据结构实现
 import unionFind from "./example//unionFind";
 import sort from "./example//sort";
@@ -24,6 +24,7 @@ const Algorithm: React.FC = () => {
   return (
     <div>
       {selectionSort}
+
     </div>
   )
 }
