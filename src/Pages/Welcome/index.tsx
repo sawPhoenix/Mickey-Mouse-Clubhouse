@@ -5,7 +5,7 @@ const WolCome: React.FC = () => {
   return (
     <div>
       <div className="test_model">
-        <Button></Button>
+        <Button>123</Button>
       </div>
     </div>
   )
