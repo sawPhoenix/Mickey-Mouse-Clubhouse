@@ -20,6 +20,7 @@
       let t = a[i];
       a[i] = a[j];
       a[j] = t;
+      
     }
     show(a: number[]) {
       for (let i = 0; i < a.length; i++) {
