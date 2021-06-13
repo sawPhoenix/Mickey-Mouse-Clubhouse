@@ -7,9 +7,11 @@ const WolCome: React.FC = () => {
   const history = useHistory();
   return (
     <div>
-      <div className="test_model">
-        <Button onClick={() => { console.log(history.push('/algorithm'));
+      <div className="menu_model">
+        <Button type="submit" onClick={() => { console.log(history.push('/algorithm'));
          }}>to Algorithm</Button>
+        <Button onClick={() => { console.log(history.push('/daily'));
+         }}>to Daily</Button>
       </div>
     </div>
   )

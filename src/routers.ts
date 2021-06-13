@@ -1,6 +1,7 @@
 import Welcome from "./pages/Welcome";
 import ButtonType from "./pages/ButtonType";
 import Algorithm from "./pages/Algorithm";
+import Daily from "./pages/Daily";
 
 const routers = [
   {
@@ -14,6 +15,10 @@ const routers = [
   {
     path: "/algorithm",
     component: Algorithm
+  },
+  {
+    path: "/daily",
+    component: Daily
   },
 ]
 

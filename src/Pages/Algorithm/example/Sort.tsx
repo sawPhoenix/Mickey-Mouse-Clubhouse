@@ -101,7 +101,7 @@ const Sort: React.FC = () => {
 
   return (
     <div>
-      <Button onClick={() => { compare(500000) }}> 时间测试</Button>
+      <Button onClick={() => { compare(50000) }}> 时间测试</Button>
     </div>
   )
 }
