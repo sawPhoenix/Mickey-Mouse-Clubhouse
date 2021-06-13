@@ -4,7 +4,7 @@ import Button from '../../components/PublicComponents/Button';
 import { Queue, Stack, LinkedList } from "./pubic"; //  数据结构实现
 import unionFind from "./modal/unionFind";
 import Sort from "./example/Sort";
-import classnames from "classnames";
+
 const Algorithm: React.FC = () => {
  
   return (

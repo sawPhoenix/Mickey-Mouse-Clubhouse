@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/PublicComponents/Button'
 import classnames from "classnames";
-
 const WolCome: React.FC = () => {
   const history = useHistory();
   return (
