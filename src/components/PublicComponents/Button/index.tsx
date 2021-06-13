@@ -63,7 +63,6 @@ export const Button: FC<ButtonProps> = (props) => {
     if (btnType === "neon") {
       setNeonColor({color: neonColor || "#4cc9f0"})
     }
-    console.log(neonCol);
   }
 
   if (btnType === "link" && href) {

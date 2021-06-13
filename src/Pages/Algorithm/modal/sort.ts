@@ -1,4 +1,3 @@
- 
 
  class Example {
     constructor() {
@@ -38,4 +37,3 @@
  }
 
  export default Example;
-
