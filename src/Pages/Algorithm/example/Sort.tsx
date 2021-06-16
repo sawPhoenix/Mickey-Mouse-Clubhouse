@@ -69,15 +69,55 @@ const Sort: React.FC = () => {
       for (let i = 1; i < arr.length; i++) {
 
         //将a[i]插入到a[i-h],a[i-2*h],a[i-3*h]...之中
-        for (let j = i; j >= h && Sort.less(arr[j], arr[j - h]); j-= h) {
+        for (let j = i; j >= h && Sort.less(arr[j], arr[j - h]); j -= h) {
           Sort.exch(arr, j, j - h)
         }
-        
+
       }
-      h = h/3
+      h = h / 3
     }
     return arr
   }
+
+  /**
+   * 并归排序
+   * @param T 
+   */
+
+  const merge = (a: any[], lo: number, mid: number, hi: number) => {
+    let i = lo, j = mid + 1;
+    let aux = []
+    for (let k = lo; k <= hi; k++) {
+      aux[k] = a[k]
+    }
+    for (let k = lo; k <= hi; k++) {
+      if (i > mid) {
+        a[k] = aux[j++]
+      } else if (j > hi) {
+        a[k] = aux[i++]
+      } else if (Sort.less(aux[j],aux[i])) {
+        a[k] = aux[j++]
+      } else {
+        a[k] = aux[i++]
+      }
+    }
+  }
+  const mergeBU = (a: any[]) => {
+    let N = a.length;
+    let aux = new Array(N)
+    for (let sz = 1; sz < N; sz = sz + sz) {
+      for (let lo = 0; lo < N - sz; lo += sz + sz) {
+        merge(a, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1))
+      }
+    }
+  }
+
+
+
+
+
+
+
 
   const compare = async (T: number) => {
     let arr = []
@@ -85,18 +125,18 @@ const Sort: React.FC = () => {
       arr.push(Math.floor(Math.random() * T) + 1)
     }
 
-    let res =  Duration(Selection, arr)
+    let res = Duration(Selection, arr)
     console.log(res);
-    
-    let res2 =  Duration(InsertionSort, arr)
+
+    let res2 = Duration(InsertionSort, arr)
     console.log(res2);
-    
+
     // console.log(arr);
-    
-    let res3 = Duration(Shell,arr)
+
+    let res3 = Duration(Shell, arr)
     console.log(res3);
     // console.log(Shell(arr));
-    
+
   }
 
   return (
