@@ -5,11 +5,15 @@ import { Queue, Stack, LinkedList } from "../pubic"; //  数据结构实现
 import sort from "../modal/sort";
 import moment from 'moment';
 
-const Duration = (fun: Function, a: number[]) => {
+const Duration = (fun: Function | [], a: number[]) => {
   // console.log(arr);
 
   let timer = moment.now();
-  fun(a)
+  if (typeof fun === 'function') {
+    fun(a)
+  } else {
+    a.sort((a, b) => a - b)
+  }
   let now = moment.now()
   return moment.duration(now - timer).milliseconds()
 }
@@ -35,7 +39,7 @@ const Sort: React.FC = () => {
     }
     return arr
   }
-  console.log(Selection([2, 1, 8, 4, 6, 3, 5, 7]));
+  // console.log(Selection([2, 1, 8, 4, 6, 3, 5, 7]));
 
   /**
    * 插入排序
@@ -95,48 +99,138 @@ const Sort: React.FC = () => {
         a[k] = aux[j++]
       } else if (j > hi) {
         a[k] = aux[i++]
-      } else if (Sort.less(aux[j],aux[i])) {
+      } else if (Sort.less(aux[j], aux[i])) {
         a[k] = aux[j++]
       } else {
         a[k] = aux[i++]
       }
     }
+
+    return a
   }
+
+  //自上而下
+  const mergeT = (a: any[]) => {
+    let N = a.length;
+
+    const sort = (lo: number, hi: number) => {
+      if (hi <= lo) return;
+
+      let mid = Math.floor(lo + (hi - lo) / 2);
+      console.log(mid);
+      sort(lo, mid);
+      sort(mid + 1, hi);
+      merge(a, lo, mid, hi)
+
+    }
+    sort(0, N - 1)
+    return a
+  }
+
+  // console.log(mergeT([8,5,9,6,4,7,2,3,1]));
+
+  //自下而上
   const mergeBU = (a: any[]) => {
     let N = a.length;
-    let aux = new Array(N)
     for (let sz = 1; sz < N; sz = sz + sz) {
       for (let lo = 0; lo < N - sz; lo += sz + sz) {
         merge(a, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1))
       }
     }
+
+    return a
   }
 
+  // console.log(mergeBU([8, 5, 9, 6, 4, 7, 2, 3, 1]));
 
 
+  /**
+   * 快速排序
+   * @param T 
+   */
 
+  const Quick = (arr: any[]) => {
 
+    // 切分
+    const partition = (a: any[], lo: number, hi: number): number => {
+      let i = lo, j = hi + 1, v = a[lo];
+      while (true) {
+        while (Sort.less(a[++i], v)) {
+          if (i === hi) {
+            break
+          }
+        }
+        while (Sort.less(v, a[--j])) {
+          if (i === lo) {
+            break
+          }
+        }
+        if (i >= j) break
+        Sort.exch(a, i, j)
+      }
 
+      Sort.exch(a, lo, j)
 
+      return j
+    }
+    const qsort = (a: any[], lo: number, hi: number) => {
+      if (hi <= lo) {
+        return
+      }
+      let j = partition(a, lo, hi)
+      qsort(a, lo, j - 1)
+      qsort(a, j + 1, hi)
+    }
+    qsort(arr, 0, arr.length - 1)
+    return arr
 
-  const compare = async (T: number) => {
+  }
+
+  const Quick3way = (arr: any[]) => {
+    const sort = (a: any[], lo: number, hi: number) => {
+      if (hi <= lo) return;
+      let lt = lo, i = lo + 1, gt = hi, v = a[lo];
+      while (i <= gt) {
+        let cmp = Sort.compareTo(a[i], v)
+        if (cmp < 0) {
+          Sort.exch(a, lt++, i++)
+        } else if (cmp > 0) {
+          Sort.exch(a, i, gt--)
+        } else {
+          i++
+        }
+      }
+      sort(arr, lo, lt - 1);
+      sort(a, gt + 1, hi)
+    }
+    sort(arr, 0, arr.length - 1)
+    return arr
+  }
+
+  const compare = (T: number) => {
     let arr = []
     for (let i = 0; i < T; i++) {
       arr.push(Math.floor(Math.random() * T) + 1)
     }
 
-    let res = Duration(Selection, arr)
-    console.log(res);
+    // let res = Duration(Selection, arr)
+    // console.log(res);
 
-    let res2 = Duration(InsertionSort, arr)
-    console.log(res2);
+    // let res2 = Duration(InsertionSort, arr)
+    // console.log(res2);
 
-    // console.log(arr);
+    // // console.log(arr);
 
-    let res3 = Duration(Shell, arr)
-    console.log(res3);
+    // let res3 = Duration(Shell, arr)
+    // console.log(res3);
     // console.log(Shell(arr));
 
+    // let res4 = Duration(Quick, arr)
+    // console.log(res4);
+    // console.log(Quick(arr));
+    let res5 = Duration(Quick3way, arr)
+    console.log(res5);
+    console.log(Quick3way(arr));
   }
 
   return (

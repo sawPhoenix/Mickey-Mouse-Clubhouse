@@ -15,6 +15,9 @@
     less(v:number,w:number) {
       return v - w < 0;
     }
+    compareTo(v:number,w:number) {
+      return v - w;
+    }
     exch(a:number[], i:number, j:number) {
       let t = a[i];
       a[i] = a[j];
