@@ -233,6 +233,49 @@ const Sort: React.FC = () => {
     console.log(Quick3way(arr));
   }
 
+
+
+
+  /**
+   * 练习
+   */
+
+  // 1。找出数组中第k小的元素
+  const partition = (a: any[], lo: number, hi: number): number => {
+    let i = lo, j = hi + 1, v = a[lo];
+    while (true) {
+      while (Sort.less(a[++i], v)) {
+        if (i === hi) {
+          break
+        }
+      }
+      while (Sort.less(v, a[--j])) {
+        if (i === lo) {
+          break
+        }
+      }
+      if (i >= j) break
+      Sort.exch(a, i, j)
+    }
+
+    Sort.exch(a, lo, j)
+
+    return j
+  }
+  const selectLess = (a:any[],k:number) => {
+    let lo = 0, hi = a.length - 1;
+    while (hi > lo) {
+      let j = partition(a,lo,hi)
+      if (j === k) {
+        return a[k]
+      } else if (j > k) {
+        hi = j - 1
+      } else if (j < k) {
+        lo =  j + 1
+      }
+    }
+  }
+
   return (
     <div>
       <Button onClick={() => { compare(50000) }}> 时间测试</Button>
