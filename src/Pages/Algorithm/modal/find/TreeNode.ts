@@ -177,7 +177,14 @@ export class BST {
     return null;
   }
 
-  keys(lo: number, hi: number) {
+  
+/**
+ * 范围查找
+ * @param lo 
+ * @param hi 
+ * @returns 
+ */
+  keys(lo: number, hi: number):Queue {
     let queue = new Queue;
    this.findKeys(this.root, queue, lo, hi)
    return queue
