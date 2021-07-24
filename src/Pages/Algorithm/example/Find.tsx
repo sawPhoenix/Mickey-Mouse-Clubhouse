@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Queue, Stack, LinkedList } from "../pubic"; //  数据结构实现
 import {ST, SequentialSearchST } from '../modal/find/find'
-import { BST } from '../modal/find/TreeNode'
+import { BST } from '../modal/find/BST'
 const Find: React.FC = () => {
   const data = 'It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair'
 
