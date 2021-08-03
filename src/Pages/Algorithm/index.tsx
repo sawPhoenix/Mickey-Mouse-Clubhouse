@@ -7,14 +7,15 @@ import Sort from "./example/Sort";
 import PQ from "./example/PQ";
 import Find from './example/Find'
 
+
+
 const Algorithm: React.FC = () => {
- 
   return (
     <div>
       {/* {selectionSort} */}
       {/* <Sort />
       <PQ /> */}
-      <Find　/>
+      <Find />
     </div>
   )
 }
