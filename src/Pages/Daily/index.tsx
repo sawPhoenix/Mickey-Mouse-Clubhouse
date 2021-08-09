@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Data2021 } from './node/data';
 import Button from "components/PublicComponents/Button";
 import Normal from './model/Normal';
-import styles from './index.less';
+const styles = require('./index.less');
 const Daily: React.FC = () => {
   
   const [index, setIndex] = useState(Data2021().length - 1)

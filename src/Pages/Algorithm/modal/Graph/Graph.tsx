@@ -1,12 +1,12 @@
 export class Graph {
   V: number
-  E: string
   adj: (v:number) => number
+  E: Map<any, any>;
 
   
-  constructor() {v:
+  constructor() {
     this.V = 0
-    this.E = ''
+    this.E = new Map;
     this.adj = (v:number) => {
       return v
     }
