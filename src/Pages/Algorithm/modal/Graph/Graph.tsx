@@ -104,7 +104,7 @@ export class Digraph {
     }
   }
   //广度优先搜索
-  bfs(callback: any, start: any) {
+  bfs(callback: (val:any)=> {}, start: any) {
 
     //distances、predecessors用于统计最短距离
     let distances = [] as any[]; //距离
@@ -138,7 +138,7 @@ export class Digraph {
     }
   }
   //深度优先搜索
-  dfs(callback: any, start: any) {
+  dfs(callback: (val:any)=> {}, start: any) {
     start = start || this.V[0];
     let isTrav = new Map();
     this.V.forEach((v) => {
