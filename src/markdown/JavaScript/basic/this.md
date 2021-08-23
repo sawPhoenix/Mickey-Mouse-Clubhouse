@@ -88,5 +88,41 @@
   // 之后 
   console.log( myObject[idx] ); // 2
   ```
-这种方式可以用来做可计算属性名，classnames插件用的就是这种方式
+- 这种方式可以用来做可计算属性名，可计算属性名可以用来做ES6的Symbol。（less中的classnames插件）
   
+注意：
+- 如果访问对象是一个函数中的属性，那这个访问对象所访问的是这个属性值本身的指针，并不是值本身，函数和其属性对象的关系是一种间接关系。所以，当我们在访问某个函数的属性或方法的时候，其实访问的是这个属性或方法的指针。
+- 如果是数组，给数组添加属性（不是下标），则这个属性会添加成功，但是原数组的长度并不会改变，不过这属性名如果是个==数字的格式，则会被当成下标属性，数组长度会变化。
+
+
+复制对象： 
+  - 首先，深浅拷贝，浅拷贝只是拷贝引用，深拷贝是拷贝值。但这里有个问题就是，当我们深拷贝后的值其本身是深拷贝还是浅拷贝，如果每一层的数据都需要深拷贝，也就是说深拷贝的标椎是怎样的，我们要怎么处理呢？
+
+  - 对于JSON来说，可以用JSON()来进行复制，这样一来复制的就是数据的值。不过这种方法要保证对象是JSON安全的，有局限性。
+
+
+  - ES6定义了Object.assign(..)方法来实现浅复制，
+
+属性描述：
+
+ Object.getOwnPropertyDescriptor（）
+
+例子：
+```
+var myObj = {}
+Object.defineProperty( myObj, "a", {
+   value: 2, 
+   writable: true, // 可写性
+   configurable: true, // 可配置性，即是否可以用defineProperty来修改，用delete来删除属性，而且把configurable修改成false是个不可撤销的单向操作。
+   enumerable: true // 可枚举性
+});
+myObj.a; // 2
+
+```
+
+不可变性：
+  所用的方法创建的都是浅不变性，如果需要，可以考虑重新设计程序。
+  - 对象常量： writable:false + configurable:false 
+  - 禁止扩展：Object.preventExtensions( myObj );
+  - 密封：Object.seal(..) 会创建一个“密封”的对象，这个方法实际上会在一个现有对象上调用 Object.preventExtensions(..) 并把所有现有属性标记为 configurable:false。
+  - 冻结：Object.freeze(..) 会创建一个冻结对象，这个方法实际上会在一个现有对象上调用 Object.seal(..) 并把所有“数据访问”属性标记为 writable:false，这样就无法修改它们 的值。

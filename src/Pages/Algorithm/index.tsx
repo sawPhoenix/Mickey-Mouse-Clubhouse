@@ -6,6 +6,7 @@ import unionFind from "./modal/unionFind";
 import Sort from "./example/Sort";
 import PQ from "./example/PQ";
 import Find from './example/Find'
+import GraphComponent from './example/Graph'
 
 
 
@@ -15,7 +16,8 @@ const Algorithm: React.FC = () => {
       {/* {selectionSort} */}
       {/* <Sort />
       <PQ /> */}
-      <Find />
+      {/* <Find /> */}
+      <GraphComponent />
     </div>
   )
 }

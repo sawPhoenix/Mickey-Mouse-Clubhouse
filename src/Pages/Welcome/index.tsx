@@ -5,6 +5,10 @@ import classnames from "classnames";
 // import styles from './index.less';
 const WolCome: React.FC = () => {
   const history = useHistory();
+  let testma = new Map();
+  testma.set('test1','323')
+  console.log(testma);
+  
   return (
     <div>
       <div className="menu_model">

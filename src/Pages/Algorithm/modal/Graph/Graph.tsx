@@ -1,61 +1,161 @@
 export class Graph {
-  V: number
-  adj: (v:number) => number
-  E: Map<any, any>;
-
-  
+  V: any[];
+  adjList: Map<any, any>;
   constructor() {
-    this.V = 0
-    this.E = new Map;
-    this.adj = (v:number) => {
-      return v
+    this.V = [];
+    this.adjList = new Map();
+  }
+  addVertex(val: any) {
+    this.adjList.set(val, [])
+    return this.V.push(val)
+  }
+  addEdge(left: any, right: any) {
+    if (!this.adjList.get(left)) return false;
+    if (!this.adjList.get(right)) return false;
+    this.adjList.get(left).push(right);
+    this.adjList.get(right).push(left);
+    return true
+  }
+  log() {
+    let str = '';
+    for (let i = this.V.length - 1; i > 0; i--) {
+      str += this.V[i] + ':'
     }
   }
-  static degree(G: any, v: number) {
-    throw new Error("Method not implemented.")
-  }
-  static maxDegree(G: any) {
-    throw new Error("Method not implemented.")
-  }
-  degree = (G: any, v: any) => {
-    let degree = 0
-    for (let i in G.adj) {
-      degree++
-    }
-    return degree
-  }
-  maxDegree = (G: any) => {
-    let max = 0;
-    for (let v = 0; v < G.V(); v++) {
-      if (this.degree(G, v) > max) {
-        max = this.degree(G, v)
-      }
-    }
-    return max
-  }
-  avgDegree = (G: any) => {
-    return 2 * G.E() / G.V()
-  }
-  numberOfSelfLoops = (G: any) => {
-    let count = 0;
-    for (let v = 0; v < G.V(); v++) {
-      for (let w of G.adj(v)) {
-        if (v === w) {
-          count++
+  //广度优先搜索
+  bfs(callback: any, start: any) {
+
+    //distances、predecessors用于统计最短距离
+    let distances = [] as any[]; //距离
+    let predecessors = [] as any[]; //前溯点
+
+    start = start || this.V[0];
+    let queue = [];
+    queue.push(start)
+    let adjList = this.adjList;
+    let isTrav = new Map();
+    this.V.forEach((v) => {
+      isTrav.set(v, 0);
+      distances[v] = 0;
+      predecessors[v] = null;
+    });
+    isTrav.set(start, 1);
+    while (queue.length > 0) {
+      let u = queue.shift();
+      let neighhors = adjList.get(u)
+      for (let i = 0; i < neighhors.length; i++) {
+        let w = neighhors[i];
+        if (isTrav.get(w) === 0) {
+          isTrav.set(w, 1);
+          queue.push(w);
+          distances[w] = distances[u] + 1;
+          predecessors[w] = u
         }
       }
+      isTrav.set(u, 2);
+      callback(u)
     }
-    return count / 2
   }
-  toString() {
-    let  s = this.V + 'verices,' + this.E + 'deges\n'
-    for(let v = 0; v < this.V; v++) {
-        s += v + ':';
-        for (let w = 0 ; w < this.adj(v); w++) {
-          s +=w + " "
-        }
-        s += '\n';
+  //深度优先搜索
+  dfs(callback: any, start: any) {
+    start = start || this.V[0];
+    let isTrav = new Map();
+    this.V.forEach((v) => {
+      isTrav.set(v, 0)
+    });
+    this.dfsVisit(start, isTrav, callback)
+  }
+  dfsVisit(n: any, isTrav: Map<any, any>, callback: any) {
+    isTrav.set(n, 1);
+    callback(n);
+    let neighhors = this.adjList.get(n);
+    for (let i = 0; i < neighhors.length; i++) {
+      let w = neighhors[i];
+      if (isTrav.get(w) == 0) {
+        this.dfsVisit(w, isTrav, callback);
+      }
     }
-    return s
+    isTrav.set(n, 2)
+  }
+}
+
+export class Digraph {
+  V: any[];
+  adjList: Map<any, any>;
+  constructor(V: any[]) {
+    this.V = V || [];
+    this.adjList = new Map();
+  }
+  addVertex(val: any) {
+    this.adjList.set(val, [])
+    return this.V.push(val)
+  }
+  addEdge(left: any, right: any) {
+    if (!this.adjList.get(left)) return false;
+    if (!this.adjList.get(right)) return false;
+    this.adjList.get(left).push(right);
+    this.adjList.get(right).push(left);
+    return true
+  }
+  log() {
+    let str = '';
+    for (let i = this.V.length - 1; i > 0; i--) {
+      str += this.V[i] + ':'
+    }
+  }
+  //广度优先搜索
+  bfs(callback: any, start: any) {
+
+    //distances、predecessors用于统计最短距离
+    let distances = [] as any[]; //距离
+    let predecessors = [] as any[]; //前溯点
+
+    start = start || this.V[0];
+    let queue = [];
+    queue.push(start)
+    let adjList = this.adjList;
+    let isTrav = new Map();
+    this.V.forEach((v) => {
+      isTrav.set(v, 0);
+      distances[v] = 0;
+      predecessors[v] = null;
+    });
+    isTrav.set(start, 1);
+    while (queue.length > 0) {
+      let u = queue.shift();
+      let neighhors = adjList.get(u)
+      for (let i = 0; i < neighhors.length; i++) {
+        let w = neighhors[i];
+        if (isTrav.get(w) === 0) {
+          isTrav.set(w, 1);
+          queue.push(w);
+          distances[w] = distances[u] + 1;
+          predecessors[w] = u
+        }
+      }
+      isTrav.set(u, 2);
+      callback(u)
+    }
+  }
+  //深度优先搜索
+  dfs(callback: any, start: any) {
+    start = start || this.V[0];
+    let isTrav = new Map();
+    this.V.forEach((v) => {
+      isTrav.set(v, 0)
+    });
+    this.dfsVisit(start, isTrav, callback)
+  }
+  dfsVisit(n: any, isTrav: Map<any, any>, callback: any) {
+    isTrav.set(n, 1);
+    callback(n);
+    let neighhors = this.adjList.get(n);
+    for (let i = 0; i < neighhors.length; i++) {
+      let w = neighhors[i];
+      if (isTrav.get(w) == 0) {
+        this.dfsVisit(w, isTrav, callback);
+      }
+    }
+    isTrav.set(n, 2)
   }
 }
