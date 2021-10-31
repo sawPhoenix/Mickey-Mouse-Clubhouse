@@ -26,8 +26,8 @@ export class Graph {
   bfs(callback: any, start: any) {
 
     //distances、predecessors用于统计最短距离
-    let distances = [] as any[]; //距离
-    let predecessors = [] as any[]; //前溯点
+    let distances: any[] = []; //距离
+    let predecessors: any[] = []; //前溯点
 
     start = start || this.V[0];
     let queue = [];
@@ -107,8 +107,9 @@ export class Digraph {
   bfs(callback: (val:any)=> {}, start: any) {
 
     //distances、predecessors用于统计最短距离
-    let distances = [] as any[]; //距离
-    let predecessors = [] as any[]; //前溯点
+    let distances: any[] = []; //距离
+    let predecessors: any[] = []; //前溯点
+
 
     start = start || this.V[0];
     let queue = [];

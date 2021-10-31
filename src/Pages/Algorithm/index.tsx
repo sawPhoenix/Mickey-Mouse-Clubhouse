@@ -11,6 +11,7 @@ import GraphComponent from './example/Graph'
 
 
 const Algorithm: React.FC = () => {
+
   return (
     <div>
       {/* {selectionSort} */}

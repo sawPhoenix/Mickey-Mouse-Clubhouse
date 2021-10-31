@@ -69,8 +69,6 @@
   箭头函数的绑定调用过一次后，会自动绑定到被调用的作用域中，且无法变更，如果第二次绑定到其他作用域上，this也会指向第一次绑定的函数上。
 
 
-
-  # 类型
   
   ## 对象
 
@@ -114,7 +112,7 @@ Object.defineProperty( myObj, "a", {
    value: 2, 
    writable: true, // 可写性
    configurable: true, // 可配置性，即是否可以用defineProperty来修改，用delete来删除属性，而且把configurable修改成false是个不可撤销的单向操作。
-   enumerable: true // 可枚举性
+   enumerable: true // 可枚举性 默认ture， false时不会出现在for..in循环中
 });
 myObj.a; // 2
 
@@ -126,3 +124,57 @@ myObj.a; // 2
   - 禁止扩展：Object.preventExtensions( myObj );
   - 密封：Object.seal(..) 会创建一个“密封”的对象，这个方法实际上会在一个现有对象上调用 Object.preventExtensions(..) 并把所有现有属性标记为 configurable:false。
   - 冻结：Object.freeze(..) 会创建一个冻结对象，这个方法实际上会在一个现有对象上调用 Object.seal(..) 并把所有“数据访问”属性标记为 writable:false，这样就无法修改它们 的值。
+
+存在性：
+  Object.hasOwnProperty() or Object.prototype.hasOwnProperty.call(myObject,"a")//加强版，会将基础的hasOwnProperty()方法显式绑定到Object上。
+  propertyIsEnumerable(..) 会检查给定的属性名是否直接存在于对象中（而不是在原型链 上）并且满足 enumerable:true
+  Object.keys(..) 会返回一个数组，包含所有可枚举属性
+  Object.getOwnPropertyNames(..) 会返回一个数组，包含所有属性，无论它们是否可枚举。
+
+
+for..in 循环可以用来遍历对象的可枚举属性列表（包括 [[Prototype]] 链）
+
+你可以使用 ES6 的 for..of 语法来遍历数据结构（数组、对象，等等）中的值，for..of 会寻找内置或者自定义的 @@iterator 对象并调用它的 next() 方法来遍历数据值
+
+```
+var myObject = { a: 2, b: 3 }; Object.defineProperty(myObject, Symbol.iterator, {
+    enumerable: false, writable: false, configurable: true, value: function () {
+      var o = this;
+      var idx = 0;
+      var ks = Object.keys(o);
+      return {
+        next: function () {
+          return { value: o[ks[idx++]], done: (idx > ks.length) };
+        }
+      };
+    }
+  });
+  // 手动遍历 myObject var it = myObject[Symbol.iterator](); it.next(); // { value:2, done:false } 
+  it.next(); // { value:3, done:false } 
+  it.next(); // { value:undefined, done:true }
+  // 用 for..of 遍历 myObject
+  for (var v of myObject) { console.log(v); }// 2 // 3
+```
+
+## 类
+  类的三要素：实例化，继承，多态
+  js实际上没有类， es6的类属于语法糖
+
+- 继承： 子类可以继承父类的属性和方法，
+- 多态： 子类继承的方法和子类自己的方法是两个不同方法，就算名字一样，引用效果也是不同的，这里需要注意的一点:继承的方法会被绑定到父类或者说创建函数的原型链上，所以如果要在当前类中执行需要使用.call(this)改变this指向
+- 混入： 
+  ```
+  function mixin( sourceObj, targetObj ) {
+    for (var key in sourceObj) { // 只会在不存在的情况下复制
+      if (!(key in targetObj)) {
+        targetObj[key] = sourceObj[key];
+      } 
+    }
+    return targetObj; 
+  }
+  ```
+
+ ## 原型
+ [[Prototype]]：是js的内置属性，所有属性查找时都会查找原型连，知道找到属性或查找完整个原型链
+ 
+ Object.prototype： 所有普通的 [[Prototype]] 链最终都会指向内置的 Object.prototype。由于所有的“普通” （内置，不是特定主机的扩展）对象都“源于”（或者说把 [[Prototype]] 链的顶端设置为） 这个 Object.prototype 对象，所以它包含 JavaScript 中许多通用的功能。

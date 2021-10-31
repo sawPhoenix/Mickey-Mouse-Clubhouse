@@ -48,3 +48,7 @@ export class EdgeWeightGraph {
   }
 
 }
+
+export class LazyPrimMST {
+  
+}
