@@ -9,6 +9,8 @@ rm id -f  强制删除
 - docker image save 镜像名称：版本号   -- 导出镜像
 - docker image load -i  .\            --导入镜像
 自有文件导入 offline
+- docker system prune -f 批量清除容器
+- docker image prune -a  批量清除镜像
 
 #  Dockerfile
     用于构建docker镜像的一个文件
@@ -49,3 +51,7 @@ CMD ["python3","jspang.py"]
   docker login 
 
   docker image push sawdeockerid/test    
+
+
+比如在windos11下进入PowerShell，运行一个Node的容器，然后把/app目录作为，把本机的当前目录作为绑定目录，意思是容器中的app目录和本机的当前目录绑定到了一起
+  docker container run -it -v ${pwd}:/app node

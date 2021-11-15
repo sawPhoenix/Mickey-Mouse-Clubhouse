@@ -1,9 +1,5 @@
 declare module '*.css';
-
-declare module '*.less' {
-  const content: any
-  export = content
-}
+declare module '*.less';
 declare module '*.png';
 declare module '*.svg' {
   export function ReactComponent(
