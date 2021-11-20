@@ -178,3 +178,81 @@ var myObject = { a: 2, b: 3 }; Object.defineProperty(myObject, Symbol.iterator, 
  [[Prototype]]：是js的内置属性，所有属性查找时都会查找原型连，知道找到属性或查找完整个原型链
  
  Object.prototype： 所有普通的 [[Prototype]] 链最终都会指向内置的 Object.prototype。由于所有的“普通” （内置，不是特定主机的扩展）对象都“源于”（或者说把 [[Prototype]] 链的顶端设置为） 这个 Object.prototype 对象，所以它包含 JavaScript 中许多通用的功能。
+
+  ### 原型继承
+  示例代码：
+  ```
+  function Foo(name) {
+    this.name = name;
+  } Foo.prototype.myName = function () {
+    return this.name;
+  };
+  function Bar(name, label) {
+    Foo.call(this, name);
+    this.label = label;
+  }
+  
+  // 我们创建了一个新的 Bar.prototype 对象并关联到 Foo.prototype 
+  Bar.prototype = Object.create(Foo.prototype); 
+  // 注意！现在没有 Bar.prototype.constructor 了
+  // 如果你需要这个属性的话可能需要手动修复一下它
+  Bar.prototype.myLabel = function () {
+    return this.label;
+  };
+  var a = new Bar("a", "obj a");
+  a.myName(); // "a" 
+  a.myLabel(); // "obj a"
+  ```
+  这段代码的核心部分就是语句 Bar.prototype = Object.create( Foo.prototype )。调用 Object.create(..) 会凭空创建一个“新”对象并把新对象内部的 [[Prototype]] 关联到你指定的对象（本例中是 Foo.prototype）。
+
+  常见错误做法
+  1. Bar.prototype = Foo.prototype; // 和你想要的机制不一样！
+      
+      这个做法只是让 Bar.prototype 直接引用 Foo.prototype 对象。因此当你执行类似 Bar.prototype. myLabel = ... 的赋值语句时会直接修改 Foo.prototype 对象本身。这样的话Bar就没有存在的必要了。
+
+  2. Bar.prototype = new Foo();
+
+      Bar.prototype = new Foo() 的确会创建一个关联到 Bar.prototype 的新对象
+      副作用： 使用 了 Foo(..) 的“构造函数调用”，如果Foo修改状态，注册到其他对象等操作，会影响到Bar以及它的后代
+
+  检查“类”关系：
+
+  ```
+  a instanceof Foo //只能处理对象和函数之间的关系
+  Foo.prototype.isPrototypeOf( a ); // 即 a.isPrototypeOf(b),可以直接获取原型链：Object.getPrototypeOf( a );
+  ```
+
+  大部分浏览器也可以用：a.__proto__ === Foo.prototype;来访问内部 [[Prototype]] 属性。和.constructor 一样，.__proto__ 实际上并不存在于你正在使用的对象中。实际上，它和其他的常用函数（.toString()、.isPrototypeOf(..)，等等）一样，存在于内置的 Object.prototype 中。
+  
+  此外，.__proto__ 看起来很像一个属性，但是实际上它更像一个 getter/setter
+
+  大致实现：
+  ```
+  Object.defineProperty(Object.prototype, "__proto__", {
+    get: function () {
+      return Object.getPrototypeOf(this);
+    }, set: function (o) { // ES6 中的 setPrototypeOf(..) 
+      Object.setPrototypeOf(this, o);
+      return o;
+    }
+  });
+  ```
+  因此，访问（获取值）a.__proto__ 时，实际上是调用了 a.__proto__()（调用 getter 函数）。虽然 getter 函数存在于 Object.prototype 对象中，但是它的 this 指向对象 a，所以和 Object.getPrototypeOf( a ) 结果相同。
+ ## 构造函数
+  ```
+   var a = new Foo();
+  ```
+  当函数被new调用时，它就会构造一个对象并赋值 给 a，构造函数中也会有constructor 等类相关的属性
+
+  通过构造函数创建的对象中的.constructor实际上是被委托给了Foo，虽然a.constructor === Foo成立，但这并不是真的完全相等。Foo.prototype 的 .constructor 属性只是 Foo 函数在声明时的默认属性。如果你创建了一个新对象并替换了函数默认的 .prototype 对象引用，那么新对象并不会自动获 得 .constructor 属性。
+
+  示例代码：
+  ```
+  function Foo() { /* .. */ } 
+  Foo.prototype = { /* .. */ }; // 创建一个新原型对象
+  var a1 = new Foo();
+  a1.constructor === Foo; // false! 
+  a1.constructor === Object; // true!
+
+  ```
+  到底怎么回事？ a1 并没有 .constructor 属性，所以它会委托 [[Prototype]] 链上的 Foo.prototype。但是这个对象也没有 .constructor 属性（不过默认的 Foo.prototype 对象有这 个属性！），所以它会继续委托，这次会委托给委托链顶端的 Object.prototype。这个对象 有 .constructor 属性，指向内置的 Object(..) 函数。
