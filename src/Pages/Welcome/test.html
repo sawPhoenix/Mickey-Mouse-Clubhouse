@@ -10,5 +10,15 @@
 
 <body>
 </body>
+<script>
+
+  const val = new Promise((res) => {
+    console.log(1);
+    res()
+  }).then((res) => {
+    console.log(2);
+  })
+  console.log(3);
+</script>
 
 </html>
