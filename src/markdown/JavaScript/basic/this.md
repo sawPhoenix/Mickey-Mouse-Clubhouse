@@ -256,3 +256,25 @@ var myObject = { a: 2, b: 3 }; Object.defineProperty(myObject, Symbol.iterator, 
 
   ```
   到底怎么回事？ a1 并没有 .constructor 属性，所以它会委托 [[Prototype]] 链上的 Foo.prototype。但是这个对象也没有 .constructor 属性（不过默认的 Foo.prototype 对象有这 个属性！），所以它会继续委托，这次会委托给委托链顶端的 Object.prototype。这个对象 有 .constructor 属性，指向内置的 Object(..) 函数。
+
+
+  ## 对象关联
+  ### Object.create(..)
+
+  示例： 
+  ```
+   var foo = {
+    something: function () {
+      console.log('Tell me something good...');
+    },
+  };
+  var bar = Object.create(foo);
+  bar.something(); // Tell me something good...
+  ```
+  >Object.create(..) 会创建一个新对象（bar）并把它关联到我们指定的对象（foo），这样 我们就可以充分发挥 [[Prototype]] 机制的威力（委托）并且避免不必要的麻烦（比如使 用 new 的构造函数调用会生成 .prototype 和 .constructor 引用）
+
+
+tips ： 
+  > Object.create(null) 会 创 建 一 个 拥 有 空（ 或 者 说 null）[[Prototype]] 链接的对象，这个对象无法进行委托。由于这个对象没有原型链，所以 instanceof 操作符（之前解释过）无法进行判断，因此总是会返回 false。 这些特殊的空 [[Prototype]] 对象通常被称作“字典”，它们完全不会受到原 型链的干扰，因此非常适合用来存储数据
+
+
