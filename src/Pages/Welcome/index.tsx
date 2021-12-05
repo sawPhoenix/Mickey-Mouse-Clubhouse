@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/PublicComponents/Button';
 import classnames from 'classnames';
+import styles from './index.less';
 const WolCome: React.FC = () => {
   const history = useHistory();
   let testma = new Map();
@@ -22,6 +23,7 @@ const WolCome: React.FC = () => {
   return (
     <div>
       <div className="menu_model">
+        <div className={styles.test}></div>
         <Button
           data-cy="to_Algorithm"
           type="submit"
