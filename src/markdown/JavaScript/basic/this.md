@@ -175,10 +175,12 @@ var myObject = { a: 2, b: 3 }; Object.defineProperty(myObject, Symbol.iterator, 
   ```
 
  ## 原型
- [[Prototype]]：是js的内置属性，所有属性查找时都会查找原型连，知道找到属性或查找完整个原型链
+ [[Prototype]]：是js的内置属性，所有属性查找时都会查找原型连，直到找到属性或查找完整个原型链
  
  Object.prototype： 所有普通的 [[Prototype]] 链最终都会指向内置的 Object.prototype。由于所有的“普通” （内置，不是特定主机的扩展）对象都“源于”（或者说把 [[Prototype]] 链的顶端设置为） 这个 Object.prototype 对象，所以它包含 JavaScript 中许多通用的功能。
 
+  ### 原型链
+  如果在第一个对象上没有找到需要的属性或者方法引用，引擎就会继续在 [[Prototype]] 关联的对象上进行查找。同理，如果在后者中也没有找到需要的引用就会继续查找它的 [[Prototype]]，以此类推。这一系列对象的链接被称为“原型链”。
   ### 原型继承
   示例代码：
   ```
@@ -278,3 +280,4 @@ tips ：
   > Object.create(null) 会 创 建 一 个 拥 有 空（ 或 者 说 null）[[Prototype]] 链接的对象，这个对象无法进行委托。由于这个对象没有原型链，所以 instanceof 操作符（之前解释过）无法进行判断，因此总是会返回 false。 这些特殊的空 [[Prototype]] 对象通常被称作“字典”，它们完全不会受到原 型链的干扰，因此非常适合用来存储数据
 
 
+# 原型链

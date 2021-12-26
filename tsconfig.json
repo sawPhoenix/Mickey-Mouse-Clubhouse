@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["cypress"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,9 +18,5 @@
     "baseUrl": "src",
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",
-    "typings.d.ts",
-    "**/*.ts"
-  ]
+  "include": ["src", "typings.d.ts", "**/*.ts"]
 }

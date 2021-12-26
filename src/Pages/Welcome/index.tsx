@@ -12,14 +12,26 @@ const WolCome: React.FC = () => {
   const update = (val: number) => {
     return val + 1;
   };
-
-  var foo = {
-    something: function () {
-      console.log('Tell me something good...');
+  const Foo = {
+    me: '',
+    init: function (who: any) {
+      this.me = who;
+    },
+    identify: function () {
+      return 'I am ' + this.me;
     },
   };
-  var bar = Object.create(foo);
-  bar.something(); // Tell me something good...
+  // let Bar = Object.create(Foo);
+  // Bar.speak = function () {
+  //   alert('Hello, ' + this.identify() + '.');
+  // };
+  // var b1 = Object.create(Bar);
+  // b1.init('b1');
+  // var b2 = Object.create(Bar);
+  // b2.init('b2');
+  // b1.speak();
+  // b2.speak();
+
   return (
     <div>
       <div className="menu_model">
