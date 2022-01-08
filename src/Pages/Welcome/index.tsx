@@ -65,6 +65,14 @@ const WolCome: React.FC = () => {
         >
           to Daily
         </Button>
+        <Button
+          data-cy="to_Daily"
+          onClick={() => {
+            console.log(history.push('/demo'));
+          }}
+        >
+          to Demo
+        </Button>
       </div>
     </div>
   );

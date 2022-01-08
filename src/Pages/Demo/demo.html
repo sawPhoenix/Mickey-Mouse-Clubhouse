@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  
+  // let a = 'foo';
+  // let b =Array.prototype.reverse.call(a)
+  // var c = a // 将a的值转换为字符数组 
+  // .split( "" ) // 将数组中的字符进行倒转 
+  // .reverse() // 将数组中的字符拼接回字符串
+  //  .join( "" ); c; // "oof"
+  // console.log(c);
+  // console.log(0 === -0);
+  // console.log(+0 === -0);
+  // let a = 1
+  // const fun = function (a = 2,b= 1) {
+  //   console.log(a,b);
+  // }
+  // fun(null,NaN)
+  // console.log(typeof null);
+
+  const deepClone = (origin, hashMap = new WeakMap()) => {
+  if (origin == undefined || typeof origin !== 'object') {
+    return origin;
+  }
+  if (origin instanceof Date) {
+    return new Date(origin);
+  }
+  if (origin instanceof RegExp) {
+    return new RegExp(origin);
+  }
+
+  // 用weakMap保存一下相关参数，如果数据存在就不用复制
+  const hashkey = hashMap.get(origin);
+  if (hashkey) {
+    return hashkey;
+  }
+
+  const target = new origin.constructor();
+  for (let k in origin) {
+    if (origin.hasOwnProperty(k)) {
+      target[k] = deepClone(origin[k]);
+    }
+  }
+  return target;
+};
+let arr = [{name:1}, {name:1}, {name:1}, {name:1}, {name:1}];
+
+  Array.prototype.myReduce = function (cb, initialValue) {
+    var _arr = this;
+    const _len = _arr.length;
+    let  _item;
+    let acc = initialValue || _arr[0]
+    const startIndex = initialValue ? 0 : 1
+    for (var i = startIndex; i < _len; i++) {
+      _item = _arr[i]
+      acc = cb(acc, _item, i, _arr);
+    } 
+    return acc;
+  };
+ const newArr =  arr.myReduce(function(prev,item,index,array) {
+
+    return prev + item
+  })
+ const reArr =  arr.reduce(function(prev,item,index,array) {
+    return prev + item
+  })
+  newArr
+  console.log(arr);
+  console.log(reArr);
+  console.log(newArr);
+</script>
+</html>
