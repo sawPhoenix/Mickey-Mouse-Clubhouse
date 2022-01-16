@@ -44,14 +44,19 @@
  -  -0 JSON.stringify(-0) 返回 "0" ，而 JSON.parse("-0") 返回 -0 。
  -  Object.is(..) 来判断两个值是否绝对相等 
 
-
-
-
-# 相等性
+### 相等性
     falsy值（表示false的值）：false， +/-0, 0, '',"",``,null, undefind, NaN, 8n
   同值相等（same-value）：底层实现： Object.is() ，
     在这种情况下，+/-0, 0,三个值不相等，且NaN===NaN
   零值相等（same-value-zero）
 
+
+## 值和引用
+- JavaScript 引用指向的是值。如果一个值有 10 个引用，这些引用指向的都是同一个值，它们相互之间没有引用 / 指向关系 指 。
+- JavaScript 对值和引用的赋值 / 传递在语法上没有区别，完全根据值的类型来决定 
+
+# 原生函数
  
- 
+ ##  [[Class]]
+  - Object.prototype.toString(..)
+

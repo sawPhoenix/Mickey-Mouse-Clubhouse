@@ -27,55 +27,9 @@
   // fun(null,NaN)
   // console.log(typeof null);
 
-  const deepClone = (origin, hashMap = new WeakMap()) => {
-  if (origin == undefined || typeof origin !== 'object') {
-    return origin;
-  }
-  if (origin instanceof Date) {
-    return new Date(origin);
-  }
-  if (origin instanceof RegExp) {
-    return new RegExp(origin);
-  }
-
-  // 用weakMap保存一下相关参数，如果数据存在就不用复制
-  const hashkey = hashMap.get(origin);
-  if (hashkey) {
-    return hashkey;
-  }
-
-  const target = new origin.constructor();
-  for (let k in origin) {
-    if (origin.hasOwnProperty(k)) {
-      target[k] = deepClone(origin[k]);
-    }
-  }
-  return target;
-};
-let arr = [{name:1}, {name:1}, {name:1}, {name:1}, {name:1}];
-
-  Array.prototype.myReduce = function (cb, initialValue) {
-    var _arr = this;
-    const _len = _arr.length;
-    let  _item;
-    let acc = initialValue || _arr[0]
-    const startIndex = initialValue ? 0 : 1
-    for (var i = startIndex; i < _len; i++) {
-      _item = _arr[i]
-      acc = cb(acc, _item, i, _arr);
-    } 
-    return acc;
-  };
- const newArr =  arr.myReduce(function(prev,item,index,array) {
-
-    return prev + item
-  })
- const reArr =  arr.reduce(function(prev,item,index,array) {
-    return prev + item
-  })
-  newArr
-  console.log(arr);
-  console.log(reArr);
-  console.log(newArr);
+  // var a = new String('abc');
+  // console.log(a.valueOf());
+  console.log(
+  Object.prototype.toString.call( [1,2,3] ));
 </script>
 </html>
