@@ -44,8 +44,8 @@ export const deepClone = (origin, hashMap = new WeakMap()) => {
 
 /**
  * reduce方法实现
- * @param {*} origin 原对象
- * @param {*} target 目标对象，可不传
+ * @param {cb} 返回函数
+ * @param {initialValue} 初始值，可不传
  * @returns
  */
 export const myReduce = function (cb, initialValue) {

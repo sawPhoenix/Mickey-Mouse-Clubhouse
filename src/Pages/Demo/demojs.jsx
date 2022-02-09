@@ -36,5 +36,6 @@ export default function () {
   const newdeep = deepClone(arr);
   console.log(arr);
   console.log(newdeep);
+
   return <div></div>;
 }

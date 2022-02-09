@@ -45,14 +45,28 @@
  -  Object.is(..) 来判断两个值是否绝对相等 
 
 ### 相等性
-    falsy值（表示false的值）：false， +/-0, 0, '',"",``,null, undefind, NaN, 8n
-  同值相等（same-value）：底层实现： Object.is() ，
+   - falsy值（表示false的值）：false， +/-0, 0, '',"",``,null, undefind, NaN, 8n
+  - 同值相等（same-value）：底层实现： Object.is() ，
     在这种情况下，+/-0, 0,三个值不相等，且NaN===NaN
-  零值相等（same-value-zero）
+  - 零值相等（same-value-zero）
+
+ ```
+
+  '0' == false; // true -- 晕！
+  false == 0; // true -- 晕！
+  false == ''; // true -- 晕！
+  false == []; // true -- 晕！
+  '' == 0; // true -- 晕！
+  '' == []; // true -- 晕！
+  '' == 0; // true -- 晕！
+  '' == []; // true -- 晕！
+  0 == []; // true -- 晕！
+ ```
+- 根据规范 a <= b 被处理为 b < a ，然后将结果反转。因为 b < a 的结果是 false ，所以 a <= b 的结果是 true
 
 
 ## 值和引用
-- JavaScript 引用指向的是值。如果一个值有 10 个引用，这些引用指向的都是同一个值，它们相互之间没有引用 / 指向关系 指 。
+- JavaScript 引用指向的是值。如果一个值有 10 个引用，这些引用指向的都是同一个值，它们相互之间没有引用 / 指向关系。
 - JavaScript 对值和引用的赋值 / 传递在语法上没有区别，完全根据值的类型来决定 
 
 # 原生函数
@@ -60,3 +74,14 @@
  ##  [[Class]]
   - Object.prototype.toString(..)
 
+
+# 类型转换
+  - ‘~’ !~a.indexOf( "ol" ) 等于 a.indexOf("ol") === -1
+  - '~~' 我们要多加注意。首先它只适用于 32 位数字，更重要的是它对负数的处理与 Math.floor(..) 不同。
+
+
+
+# 原型
+
+- Function._proto_ === Function.prototype
+- Object._prpto_ === Funciton.prototype v
