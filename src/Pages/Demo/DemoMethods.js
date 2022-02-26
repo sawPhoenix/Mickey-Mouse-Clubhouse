@@ -60,3 +60,42 @@ export const myReduce = function (cb, initialValue) {
   }
   return value;
 };
+
+/**
+ * generator(生成器)方法实现
+ * @param {arr} 数组
+ * @returns
+ */
+export function generator(arr) {
+  let nextIndex = 0;
+
+  return {
+    next() {
+      return nextIndex > arr.length
+        ? {
+            value: arr[nextIndex++],
+            done: false,
+          }
+        : { value: undefined, done: true };
+    },
+  };
+}
+
+/**
+ * iterator（迭代器）方法实现
+ * @returns
+ */
+export function generator() {
+  let index = 0;
+  var _this = this;
+  return {
+    next() {
+      return index > _this.length
+        ? {
+            value: _this[nextIndex++],
+            done: false,
+          }
+        : { value: undefined, done: true };
+    },
+  };
+}

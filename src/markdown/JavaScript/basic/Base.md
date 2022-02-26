@@ -84,4 +84,26 @@
 # 原型
 
 - Function._proto_ === Function.prototype
-- Object._prpto_ === Funciton.prototype v
+- Object._prpto_ === Funciton.prototype 
+
+
+# EventLoop
+
+# 异步
+## 异步和并行
+  这是两个不同的概念，一个是有时间概念的，一个是多线程
+
+# 生成器和迭代器
+## 生成器
+作用：生成一个迭代器
+当你执行一个生成器，就得到了一个迭代器
+生成器不是一个iterable，所以生成一个函数需要加上括号才是iterable，其本身不是iterable
+
+## 迭代器
+
+  - for of ： 只能遍历有迭代器的元素，获得的值是键值,只遍历可迭代的值（iterable）
+
+  - for in ： 遍历
+
+ ## iterable:
+ 值中有 [Symbol.iterator]
