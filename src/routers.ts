@@ -3,6 +3,7 @@ import ButtonType from 'pages/ButtonType';
 import Algorithm from 'pages/Algorithm';
 import Daily from 'pages/Daily';
 import Demo from 'pages/Demo';
+import ThreeD from 'pages/ThreeD';
 const routers = [
   {
     path: '/',
@@ -23,6 +24,10 @@ const routers = [
   {
     path: '/demo',
     component: Demo,
+  },
+  {
+    path: '/3d',
+    component: ThreeD,
   },
 ];
 

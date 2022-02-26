@@ -85,7 +85,7 @@ export function generator(arr) {
  * iterator（迭代器）方法实现
  * @returns
  */
-export function generator() {
+export function iterator() {
   let index = 0;
   var _this = this;
   return {
