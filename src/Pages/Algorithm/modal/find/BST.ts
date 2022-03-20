@@ -1,4 +1,4 @@
-import { Queue } from "pages/Algorithm/pubic";
+import { Queue } from "Pages/Algorithm/pubic";
 
 /**
  * 二叉树查找

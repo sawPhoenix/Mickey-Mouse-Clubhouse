@@ -1,9 +1,9 @@
-import Welcome from 'pages/Welcome';
-import ButtonType from 'pages/ButtonType';
-import Algorithm from 'pages/Algorithm';
-import Daily from 'pages/Daily';
-import Demo from 'pages/Demo';
-import ThreeD from 'pages/ThreeD';
+import Welcome from 'Pages/Welcome';
+import ButtonType from 'Pages/ButtonType';
+import Algorithm from 'Pages/Algorithm';
+import Daily from 'Pages/Daily';
+import Demo from 'Pages/Demo';
+import ThreeD from 'Pages/ThreeD';
 const routers = [
   {
     path: '/',
